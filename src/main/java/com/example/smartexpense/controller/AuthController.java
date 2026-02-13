@@ -7,6 +7,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Optional;
 import java.util.Random;
 import java.util.Map;
@@ -23,6 +26,8 @@ public class AuthController {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     // 1. OTP BHEJNE KA METHOD
     @PostMapping("/send-otp")
@@ -55,6 +60,7 @@ public class AuthController {
             mailSender.send(message);
             return "SUCCESS";
         } catch (Exception e) {
+            log.error("Send OTP failed for email {}: {}", email, e.getMessage(), e);
             return "ERROR: " + e.getMessage();
         }
     }
