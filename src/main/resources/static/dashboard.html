@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Dashboard – Neural Identity</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root { --accent: #7000ff; --neon: #00d4ff; --glass: rgba(255, 255, 255, 0.03); }
+        body { font-family: 'Inter', sans-serif; color: white; margin: 0; background: #050505; }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .profile-sidebar {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            height: fit-content;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pro-card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.3s ease;
+        }
+
+        .pro-card:hover {
+            border-color: var(--accent);
+            background: rgba(112, 0, 255, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.02);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .label { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+        .value { color: white; font-size: 14px; margin-top: 5px; font-weight: 500; word-break: break-all; }
+
+        .api-badge {
+            font-family: monospace;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--neon);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        @media (max-width: 900px) { .dashboard-container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="mesh-layer mesh-layer-1"></div>
+    <header class="nav-bar" style="max-width: 1260px; margin: 20px auto;">
+        <div class="nav-left">
+            <div class="logo-orb"></div>
+            <div class="logo-text"><span class="logo-title">NeonDashboard</span></div>
+        </div>
+        <button class="nav-btn ghost" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="dashboard-container animate__animated animate__fadeIn">
+        <aside class="profile-sidebar">
+            <div id="avatarCircle" style="width: 100px; height: 100px; background: linear-gradient(45deg, var(--accent), var(--neon)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; box-shadow: 0 0 30px rgba(112, 0, 255, 0.3);">?</div>
+            
+            <h2 id="dispName" style="margin: 10px 0; font-size: 22px;">Welcome</h2>
+            <div style="margin-bottom: 30px;">
+                <span id="dispProf" class="pill" style="font-size: 10px; padding: 4px 12px; background: rgba(112, 0, 255, 0.2); border: 1px solid var(--accent);">Student</span>
+            </div>
+
+            <div class="info-item">
+                <div class="label">Email Identity</div>
+                <div class="value" id="dispEmail">loading...</div>
+            </div>
+            <div class="info-item">
+                <div class="label">Developer Key</div>
+                <div class="value" id="dispKey">Not Generated</div>
+            </div>
+            <div class="info-item">
+                <div class="label">Neural Credits</div>
+                <div class="value" style="color: #00ffaa;">9,420 Cr</div>
+            </div>
+        </aside>
+
+        <section>
+            <div style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="margin: 0;">🚀 Neural Pro Dashboard</h2>
+                <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Membership: <span style="color: #00ffaa;">Pro Verified</span></div>
+            </div>
+
+            <div class="tools-grid">
+                <div class="pro-card">
+                    <div style="font-size: 24px; margin-bottom: 15px;">📦</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 18px;">Batch Neural Sync</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; height: 60px;">Upload CSV/JSON and translate strings in sub-100ms latency.</p>
+                    <button class="nav-btn primary" style="width: 100%; margin-top: 10px;" onclick="startBatch()">Launch Tool</button>
+                </div>
+
+                <div class="pro-card">
+                    <div style="font-size: 24px; margin-bottom: 15px;">🎤</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 18px;">Live Voice Engine</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; height: 60px;">Real-time meeting transcription with dedicated neural nodes.</p>
+                    <button class="nav-btn primary" style="width: 100%; margin-top: 10px;">Start Session</button>
+                </div>
+
+                <div class="pro-card">
+                    <div style="font-size: 24px; margin-bottom: 15px;">🔑</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 18px;">Developer Portal</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; height: 60px;">Manage API keys and integrate NeonTranslate into your SaaS.</p>
+                    <button class="nav-btn ghost" style="width: 100%; margin-top: 10px;" onclick="generateKey()">Generate Key</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span style="font-size: 14px;">Monthly Usage Limit</span>
+                    <span id="usageLabel" style="font-size: 14px; color: var(--neon);">72% Optimized</span>
+                </div>
+                <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                    <div id="usageBar" style="width: 72%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--neon)); transition: 1s ease;"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const name = localStorage.getItem('userName') || "User";
+            document.getElementById('dispName').innerText = name;
+            document.getElementById('dispEmail').innerText = localStorage.getItem('userEmail') || "N/A";
+            document.getElementById('dispProf').innerText = localStorage.getItem('userProf') || "Neural Explorer";
+            document.getElementById('dispKey').innerText = localStorage.getItem('apiKey') || "Not Generated";
+            document.getElementById('avatarCircle').innerText = name.charAt(0).toUpperCase();
+
+            if(!localStorage.getItem('userEmail')) {
+                window.location.href = "index.html";
+            }
+        };
+
+        // NEW: API Key Generation Logic
+        async function generateKey() {
+            const email = localStorage.getItem('userEmail');
+            try {
+                const response = await fetch(`http://localhost:8080/api/auth/generate-api-key?email=${email}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                if(data.status === "SUCCESS") {
+                    document.getElementById('dispKey').innerText = data.apiKey;
+                    localStorage.setItem('apiKey', data.apiKey);
+                    alert("🔑 Neural Key Generated Successfully!");
+                }
+            } catch (err) { alert("Backend offline!"); }
+        }
+
+        // NEW: Batch Translation Simulation
+        async function startBatch() {
+            const email = localStorage.getItem('userEmail');
+            try {
+                const response = await fetch(`http://localhost:8080/api/auth/batch-translate?email=${email}&wordCount=1250`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                if(data.status === "COMPLETED") {
+                    // UI Update for simulation
+                    document.getElementById('usageBar').style.width = "85%";
+                    document.getElementById('usageLabel').innerText = "85% Optimized";
+                    alert(`✅ Batch Sync Done!\nProcessed: ${data.processedWords} words\nCredits: -${data.creditsDeducted}\nTime: ${data.timeTaken}`);
+                }
+            } catch (err) { alert("Backend offline!"); }
+        }
+
+        function logout() { localStorage.clear(); window.location.href = "index.html"; }
+    </script>
+</body>
+</html>

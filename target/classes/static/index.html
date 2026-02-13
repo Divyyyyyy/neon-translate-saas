@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonTranslate – Modern AI SaaS</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        /* Chota sa extra style input fields ke liye */
+        .auth-input {
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 12px; 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            color: white; 
+            margin-bottom: 12px; 
+            outline: none; 
+            text-align: center;
+            transition: 0.3s;
+        }
+        .auth-input:focus {
+            border-color: #7000ff;
+            background: rgba(112, 0, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-layer mesh-layer-1"></div>
+    <div class="mesh-layer mesh-layer-2"></div>
+    <div class="mesh-layer mesh-layer-3"></div>
+
+    <div class="page-shell animate__animated animate__fadeInUp">
+        <header class="nav-bar">
+            <div class="nav-left">
+                <div class="logo-orb"></div>
+                <div class="logo-text">
+                    <span class="logo-title">NeonTranslate</span>
+                    <span class="logo-sub">Neural AI Engine</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#product">Product</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="nav-btn ghost" onclick="openAuth()">Log in</button>
+                <button class="nav-btn primary" onclick="openAuth()">Sign up</button>
+            </div>
+        </header>
+
+        <main id="product" class="glass-shell">
+            <div class="glass-inner">
+                <section class="hero-copy animate__animated animate__fadeInLeft">
+                    <h1>Globalize your SaaS with Neural AI Precision.</h1>
+                    <p>
+                        NeonTranslate delivers a <strong>sub-100ms latency</strong> translation layer. 
+                        Integrated with Neural Machine Learning.
+                    </p>
+                    <div class="hero-tags">
+                        <span>Neural-Sync API</span>
+                        <span>Secure OTP Auth</span>
+                        <span>Voice-to-Text</span>
+                    </div>
+                </section>
+
+                <section class="cards-row">
+                    <article class="io-card animate__animated animate__fadeInUp" data-tilt>
+                        <div class="io-card-inner">
+                            <header class="io-header">
+                                <span class="pill pill-input">Input</span>
+                                <span class="pill pill-lang">EN</span>
+                            </header>
+                            <div class="io-body">
+                                <textarea id="inputText" placeholder="Type or use mic to speak..."></textarea>
+                            </div>
+                            <footer class="io-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="hint">English Input Source</span>
+                                <button id="micBtn" style="background: rgba(112, 0, 255, 0.2); border: 1px solid #7000ff; color: white; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 12px;">🎤 Start Mic</button>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="io-card io-card-output animate__animated animate__fadeInUp animate__delay-1s" data-tilt>
+                        <div class="io-card-inner">
+                            <header class="io-header">
+                                <span class="pill pill-output">Output</span>
+                                <select id="targetLang" style="background: rgba(255,255,255,0.1); color: white; border-radius: 10px; font-size: 11px; padding: 2px 5px; outline: none;">
+                                    <option value="hi" selected>Hindi (HI)</option>
+                                    <option value="es">Spanish (ES)</option>
+                                    <option value="fr">French (FR)</option>
+                                </select>
+                            </header>
+                            <div class="io-body">
+                                <textarea id="outputText" placeholder="Translation preview will appear here..." readonly></textarea>
+                            </div>
+                            <footer class="io-footer">
+                                <button id="translateBtn" class="translate-btn" type="button">Translate</button>
+                            </footer>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </main>
+
+        <section id="pricing" class="pricing-section">
+            <header class="pricing-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Scale from Side-Projects to Enterprise SaaS.</p>
+            </header>
+            <div class="pricing-grid">
+                <article class="pricing-card" data-tilt>
+                    <div class="pricing-card-inner">
+                        <h3>Free</h3>
+                        <div class="price-line"><span class="price">₹0</span><span>/mo</span></div>
+                        <button class="tier-cta ghost" onclick="openAuth()">Start for free</button>
+                    </div>
+                </article>
+
+                <article class="pricing-card pricing-card-pro" data-tilt>
+                    <div class="pricing-card-inner">
+                        <div class="best-pill">Most Popular</div>
+                        <h3>Pro</h3>
+                        <div class="price-line"><span class="price">₹500</span><span>/mo</span></div>
+                        <button id="buyProBtn" class="tier-cta primary" onclick="openAuth()">Upgrade Now</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <div id="authOverlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="glass-shell" style="padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; border: 1px solid rgba(112, 0, 255, 0.3); text-align: center;">
+            
+            <div id="authStep1">
+                <h2 style="color: white; margin-bottom: 8px;">Create Profile</h2>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px; font-size: 14px;">Setup your neural identity</p>
+                
+                <input type="text" id="fullName" placeholder="Full Name" class="auth-input">
+                <input type="email" id="authEmail" placeholder="Email Address" class="auth-input">
+                <input type="text" id="phoneInput" placeholder="Phone Number" class="auth-input">
+                <input type="text" id="professionInput" placeholder="Profession (e.g. Developer)" class="auth-input">
+                
+                <button id="sendOTPBtn" class="nav-btn primary" style="width: 100%; height: 50px; margin-top: 10px;">Sync & Get OTP</button>
+            </div>
+
+            <div id="authStep2" style="display: none;">
+                <h2 style="color: white; margin-bottom: 8px;">Verify Identity</h2>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">Enter the code sent to your mail</p>
+                <input type="text" id="otpInput" placeholder="0000" maxlength="4" style="width: 100%; padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: white; margin-bottom: 20px; outline: none; text-align: center; font-size: 28px; letter-spacing: 8px;">
+                <button id="verifyOTPBtn" class="nav-btn primary" style="width: 100%; height: 50px;">Verify & Access</button>
+            </div>
+
+            <button onclick="closeAuth()" style="background: none; border: none; color: rgba(255,255,255,0.4); margin-top: 20px; cursor: pointer; font-size: 13px;">Cancel & Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openAuth() {
+            document.getElementById('authOverlay').style.display = 'flex';
+        }
+        function closeAuth() {
+            document.getElementById('authOverlay').style.display = 'none';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
