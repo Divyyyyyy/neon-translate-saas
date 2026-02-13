@@ -25,7 +25,7 @@ document.getElementById('sendOTPBtn').addEventListener('click', async () => {
       // Updated URL with Profile Parameters
       const params = `email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&profession=${encodeURIComponent(profession)}`;
       
-      const response = await fetch(`neon-translate-saas-production.up.railway.app/api/auth/send-otp?${params}`, {
+      const response = await fetch(`https://neon-translate-saas-production.up.railway.app/api/auth/send-otp?${params}`, {
           method: 'POST'
       });
       
@@ -59,7 +59,7 @@ document.getElementById('verifyOTPBtn').addEventListener('click', async () => {
   }
 
   try {
-      const response = await fetch(`neon-translate-saas-production.up.railway.app/api/auth/verify-otp?email=${encodeURIComponent(email)}&otp=${otp}`, {
+      const response = await fetch(`https://neon-translate-saas-production.up.railway.app/api/auth/verify-otp?email=${encodeURIComponent(email)}&otp=${otp}`, {
           method: 'POST'
       });
       

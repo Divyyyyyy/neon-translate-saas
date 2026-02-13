@@ -167,7 +167,7 @@
         async function generateKey() {
             const email = localStorage.getItem('userEmail');
             try {
-                const response = await fetch(`neon-translate-saas-production.up.railway.app/api/auth/generate-api-key?email=${email}`, {
+                const response = await fetch(`https://neon-translate-saas-production.up.railway.app/api/auth/generate-api-key?email=${email}`, {
                     method: 'POST'
                 });
                 const data = await response.json();
@@ -183,7 +183,7 @@
         async function startBatch() {
             const email = localStorage.getItem('userEmail');
             try {
-                const response = await fetch(`neon-translate-saas-production.up.railway.app/api/auth/batch-translate?email=${email}&wordCount=1250`, {
+                const response = await fetch(`https://neon-translate-saas-production.up.railway.app/api/auth/batch-translate?email=${email}&wordCount=1250`, {
                     method: 'POST'
                 });
                 const data = await response.json();
