@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>smart-expense</artifactId>
+    <artifactId>neon-translate-pro</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>NeonTranslate Pro</name>
     <description>AI Translation SaaS with MySQL and OTP</description>

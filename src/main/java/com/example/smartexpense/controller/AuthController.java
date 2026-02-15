@@ -31,14 +31,17 @@ public class AuthController {
 
     // 1. OTP BHEJNE KA METHOD
     @PostMapping("/send-otp")
-    public String sendOtp(
+    public Map<String, String> sendOtp(
             @RequestParam String email, 
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) String profession) {
         
+        Map<String, String> response = new HashMap<>();
         String otp = String.format("%04d", new Random().nextInt(10000));
         
+        log.info("Attempting to send OTP to email: {}", email);
+
         User user = userRepository.findByEmail(email).orElse(new User());
         user.setEmail(email);
         user.setOtp(otp);
@@ -57,17 +60,26 @@ public class AuthController {
             message.setText("Oye " + (user.getName() != null ? user.getName() : "User") + ",\n\n" +
                             "Tera secure login OTP ye hai: " + otp + "\n\n" +
                             "Ise kisi ko batana mat!");
+            
             mailSender.send(message);
-            return "SUCCESS";
+            log.info("OTP sent successfully to {}", email);
+            
+            response.put("status", "SUCCESS");
+            response.put("message", "OTP sent successfully");
+            return response;
+            
         } catch (Exception e) {
-            log.error("Send OTP failed for email {}: {}", email, e.getMessage(), e);
-            return "ERROR: " + e.getMessage();
+            log.error("CRITICAL MAIL ERROR: {}", e.getMessage());
+            response.put("status", "ERROR");
+            response.put("details", e.getMessage());
+            return response;
         }
     }
 
     // 2. OTP VERIFY KARNE KA METHOD
     @PostMapping("/verify-otp")
     public Object verifyOtp(@RequestParam String email, @RequestParam String otp) {
+        log.info("Verifying OTP for email: {}", email);
         Optional<User> userOpt = userRepository.findByEmail(email);
         
         if (userOpt.isPresent()) {
@@ -100,7 +112,6 @@ public class AuthController {
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            // Unique UUID based API Key
             String newKey = "neon_live_" + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
             user.setApiKey(newKey);
             userRepository.save(user);
@@ -118,16 +129,9 @@ public class AuthController {
     @PostMapping("/batch-translate")
     public Map<String, Object> batchTranslate(@RequestParam String email, @RequestParam int wordCount) {
         Map<String, Object> response = new HashMap<>();
-        
-        // Simulation: 1 credit per word
-        int creditsRequired = wordCount; 
-        
         response.put("status", "COMPLETED");
         response.put("processedWords", wordCount);
-        response.put("creditsDeducted", creditsRequired);
-        response.put("timeTaken", "142ms");
         response.put("engine", "Neural-V3-Turbo");
-        
         return response;
     }
 }
