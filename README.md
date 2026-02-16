@@ -63,6 +63,6 @@
 ---
 
 ## 👤 Author
-**[Aapka Naam]**
+**[Divya Raj Singh]**
 * Full Stack Developer
 * AI & Cloud Enthusiast
